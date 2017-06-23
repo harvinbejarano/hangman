@@ -21,6 +21,7 @@ namespace HangMan.App.App_Start
             var assemblies = Assembly.GetExecutingAssembly();
             builder.RegisterControllers(assemblies);
             builder.RegisterApiControllers(assemblies);
+
             var container = builder.Build();
 
             GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
