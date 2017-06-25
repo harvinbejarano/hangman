@@ -6,12 +6,11 @@ using System.Web.Mvc;
 
 namespace HangMan.App.Controllers
 {
-    public class HomeController : Controller
+    public class WordController : Controller
     {
+        // GET: Category
         public ActionResult Index()
         {
-            ViewBag.Title = "The Hangman Game";
-
             return View();
         }
     }

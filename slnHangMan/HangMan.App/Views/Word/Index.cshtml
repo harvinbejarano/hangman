@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "Palabras";
+}
+
+<div id="mainView">
+    <div class="well" style="text-align:center;">
+        <h2>The Hangman Game!!!</h2>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <label>Palabras. </label>
+        </div>
+
+        <div class="panel-body">
+
+            <form>
+                <div class="form-group">
+                    <input type="hidden" data-bind="value:Id" />
+                    <label for="category">Categoria</label>
+                    <select id="category" class="form-control input-sm"
+                            data-bind="options: Categories,
+                                            optionsText: 'Name',
+                                            optionsValue: 'Id',
+                                            value:CategoryId,
+                                            optionsCaption: 'Elejir...'"></select>
+                    
+                </div>
+                <div class="form-group">
+                    <label for="name">Palabra</label>
+                    <input type="text" class="form-control input-sm" data-bind="value:Name" id="name">
+                    <br />
+                    <button type="button" class="btn btn-default" data-bind="click:New">Nuevo</button>
+                    <button type="button" class="btn btn-default" data-bind="click:Save">Agregar</button>
+                </div>
+
+            </form>
+            <hr />
+            <div class="table-responsive">
+                <table id="tblwordLists" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Id</th>
+                            <th>Categoria</th>
+                            <th>Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach:list">
+                        <tr>
+                            <td>
+                                <button id="btnEdit" class="btn btn-default btn-xs" data-bind="click:$root.Edit">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                            </td>
+                            <td>
+                                <span data-bind="text:Id"></span>
+                            </td>
+                            <td>
+                                <span data-bind="text:CategoryName"></span>
+                            </td>
+                            <td>
+                                <span data-bind="text:Name"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts{
+    <!--ViewModel -->
+    <script src="~/Scripts/App/ViewModels/WordViewModel.js"></script>
+}
+
