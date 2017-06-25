@@ -16,20 +16,18 @@ function Init() {
         self.pictoShow = ko.observable(0);
 
         self.PlayWord = function () {
-            debugger;
             var actualWords = self.SelectedWords();
             self.SelectedWords(actualWords + self.singleWord());
 
 
-            var n = self.GeneratedWord().indexOf( self.singleWord() );
+            var n = self.GeneratedWord().toUpperCase().indexOf(self.singleWord().toUpperCase());
             if (n == -1) {
-
-                var actualPic = parseInt( $("#npic").val());
+                var actualPic = parseInt($("#npic").val());
                 actualPic++;
                 self.pictoShow(actualPic);
-                
+
                 var picname = actualPic.toString() + ".png";
-                self.PhotoName(urlpic+picname);
+                self.PhotoName(urlpic + picname);
                 self.picVisible(true);
                 $("#npic").val(actualPic);
 
@@ -37,10 +35,19 @@ function Init() {
                     alert("Game Over");
                     return;
                 }
+            }
+            else
+            {
+                var indexes = Findchar(self.singleWord());
+                var arrayLen = indexes.length;
+                for (i = 0; i < arrayLen; i++)
+                {
+                    var _control = "_" + indexes[i].toString();
+                    var _object = $("#" + _control);
+                    $(_object).val(self.singleWord());
+                }
 
             }
-            
-
         }
 
         self.onCategoryChange = function () {
@@ -56,21 +63,21 @@ function Init() {
                 self.gameStarted(false);
                 return;
             }
-            debugger;
             var maxWords = wordlist.Data.length;
             if (maxWords > 0) {
                 var wordIndex = Math.floor((Math.random() * maxWords) + 1);
                 self.GeneratedWord(wordlist.Data[wordIndex - 1].Name);
                 self.gameStarted(true);
-                
+                var imp = '<table> <tr>';
+
                 var nChars = self.GeneratedWord().length;
                 for (i = 0; i < nChars; i++)
                 {
-                    var imp = '<input type="text" class="form-control input-sm" maxlength="1" style="width:15px;" id="' + i.toString() + '"/>';
+                    imp = imp + ' <td> <input type="text" class="form-control input-sm" maxlength="1" readonly="readonly" style="width:40px;" id="_' + i.toString() + '" name="f"/> </td> ';
 
-                    $("#chars").append(imp);
                 }
-                
+                imp = imp + '</tr> </table> ';
+                $("#chars").append(imp);
             }
             else
             {
@@ -88,10 +95,26 @@ function Init() {
         }
 
         //Callback Function
+        function Findchar(_char)
+        {
+            var result = [];
+
+            var wordlen = self.GeneratedWord().length;
+            for (i = 0; i < wordlen; i++)
+            {
+                var _char = self.GeneratedWord().substr(i, 1).toUpperCase();
+                if (_char === self.singleWord().toUpperCase())
+                {
+                    result.push(i);
+                }
+            }
+
+            return result;
+        }
+
         function onError(_errro) {
 
         }
-
 
         function onCategorySucces(_data) {
             if (_data.StatusCode != 200) {
